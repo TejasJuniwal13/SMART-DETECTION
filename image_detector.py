@@ -41,7 +41,77 @@ for box in boxes:
     confidence = float(box.conf[0])
 
 
-    if class_name == "cow" and confidence > 0.5:
+    if class_name == "cow" and confidence < 0.5:
+
+
+        x1, y1, x2, y2 = map(
+            int,
+            box.xyxy[0]
+        )
+
+
+
+        cv2.rectangle(
+            image,
+            (x1, y1),
+            (x2, y2),
+            (0, 0, 255),
+            2
+        )
+
+
+
+        label = (
+            f"{class_name} "
+            f"{confidence:.2f}"
+        )
+
+        cv2.putText(
+            image,
+            label,
+            (x1, y1 - 10),
+            cv2.FONT_HERSHEY_SIMPLEX,
+            0.7,
+            (0, 0, 255),
+            2
+        )
+        
+    if class_name == "cow" and (confidence > 0.5 and confidence < 0.75):
+
+
+        x1, y1, x2, y2 = map(
+            int,
+            box.xyxy[0]
+        )
+
+
+
+        cv2.rectangle(
+            image,
+            (x1, y1),
+            (x2, y2),
+            (255, 0, 0),
+            2
+        )
+
+
+
+        label = (
+            f"{class_name} "
+            f"{confidence:.2f}"
+        )
+
+        cv2.putText(
+            image,
+            label,
+            (x1, y1 - 10),
+            cv2.FONT_HERSHEY_SIMPLEX,
+            0.7,
+            (255, 0, 0),
+            2
+        )
+        
+    if class_name == "cow" and confidence > 0.75:
 
 
         x1, y1, x2, y2 = map(
@@ -75,6 +145,7 @@ for box in boxes:
             (0, 255, 0),
             2
         )
+
 
 cv2.imwrite(output_image, image)
 
